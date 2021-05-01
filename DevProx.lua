@@ -9568,6 +9568,7 @@ if msg and not DevAbs:get(DevProx..'Abs:Update') then
 DevAbs:set(DevProx..'Abs:Update',true)
 os.execute('unlink JSON.lua && unlink dkjson.lua')
 os.execute('git clone https://github.com/iq0abs/libs') 
+dofile('DevProx.lua') 
 end
 --     Source DevProx     --
 if text == 'الملفات' then
