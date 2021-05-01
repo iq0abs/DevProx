@@ -4,14 +4,24 @@
 --                - DevProx -                 --
 --        -- https://t.me/Dev_Prox --         --
 ------------------------------------------------ 
-https = require ("ssl.https") 
-HTTPS = require ("ssl.https") 
-http = require ("socket.http") 
+list = io.popen("ls libs")
+if list then
+redis = require('redis') 
+URL = require('socket.url') 
+serpent = require("serpent") 
+json = dofile('./JSON.lua') 
+JSON = dofile('./dkjson.lua') 
+DevAbs = redis.connect('127.0.0.1', 6379)
+else 
 URL = dofile("./libs/url.lua")
 json = dofile("./libs/JSON.lua")
 JSON = dofile("./libs/dkjson.lua")
 serpent = dofile("./libs/serpent.lua")
 DevAbs = dofile("./libs/redis.lua").connect("127.0.0.1", 6379)
+end
+HTTPS = require ("ssl.https") 
+https = require ("ssl.https") 
+http  = require ("socket.http") 
 User = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
 ServerDevProx = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a') 
 Ip = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
@@ -47,6 +57,7 @@ print('\27[1;31m┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\nلم يتم حفظ توكن
 end  
 os.execute('lua DevProx.lua') 
 end 
+DevAbs:set(DevAbs:get(ServerDevProx.."TokenDevProx"):match("(%d+)")..'Abs:Update',true)
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -6830,22 +6841,11 @@ if text and text == "المشتركين" and ChCheck(msg) or text and text == "�
 local users = DevAbs:scard(DevProx.."Abs:Users")
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙عدد المشتركين ↫ ❨ '..users..' ❩', 1, 'md')
 end
+if text and text == "المجموعات" and ChCheck(msg) or text and text == "↫ المجموعات ⌁" then
+local gps = DevAbs:scard(DevProx.."Abs:Groups")
+Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙عدد المجموعات ↫ ❨ '..gps..' ❩', 1, 'md')
 end
---     Source DevProx     --
-if text and text == 'المجموعات' and ChCheck(msg) or text and text == '↫ المجموعات ⌁' then
-if not SudoBot(msg) then
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطورين فقط ', 1, 'md')
-else
-local List = DevAbs:smembers(DevProx.."Abs:Groups")
-local t = '⌁︙مجموعات البوت ↫ ⤈ \n'
-for k,v in pairs(List) do
-t = t..k.."~ : `"..v.."`\n" 
 end
-if #List == 0 then
-t = '⌁︙لا يوجد مجموعات مفعله'
-end
-Dev_Abs(msg.chat_id_, msg.id_, 1,t, 1, 'md')
-end end
 --     Source DevProx     --
 if text and text:match('^تنظيف (%d+)$') and ChCheck(msg) then  
 if not DevAbs:get(DevProx..'Delete:Time'..msg.chat_id_..':'..msg.sender_user_id_) then  
@@ -9564,6 +9564,11 @@ io.popen("rm -rf ../.telegram-cli/*")
 print("\27[31;47m\n        ( تم تحديث ملفات البوت )        \n\27[0;34;49m\n") 
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙تم تحديث ملفات البوت", 1, "md")
 end 
+if msg and not DevAbs:get(DevProx..'Abs:Update') then
+DevAbs:set(DevProx..'Abs:Update',true)
+os.execute('unlink JSON.lua && unlink dkjson.lua')
+os.execute('git clone https://github.com/iq0abs/libs') 
+end
 --     Source DevProx     --
 if text == 'الملفات' then
 Files = '\n⌁︙الملفات المفعله في البوت ↫ ⤈ \n┉ ≈ ┉ ≈ ┉ ≈ ┉ ≈ ┉\n'
