@@ -5429,7 +5429,7 @@ if DevAbs:sismember(DevProx..'Abs:SecondSudo:',user) and not Sudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, "⌁︙*لاتستطيع كتم المطور الثانوي*", 1, 'md')
 return false 
 end
-if SudoId(user) ~= true then
+if SudoId(user) == false then
 DevAbs:sadd(DevProx..'Abs:MuteAll:', user)
 ReplyStatus(msg,user,"Reply","⌁︙تم كتمه عام من المجموعات")  
 else
