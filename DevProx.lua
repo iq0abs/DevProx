@@ -8818,8 +8818,8 @@ if text == 'جلب نسخه السورس' then
 if not SecondSudo(msg) then
 Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙للمطور الاساسي فقط ', 1, 'md')
 else
-sendDocument(DevId, 0, 0, 1, nil, './DevProx.lua', dl_cb, nil)
-Dev_Abs(msg.chat_id_, msg.id_, 1, '⌁︙عزيزي المطور تم ارسال نسخة ملف السورس الى الخاص', 1, 'md')
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './DevProx.lua', '⌁︙نسخة ملف خاصه بسورس بروكس',dl_cb, nil)
+
 end end
 --     Source DevProx     --
 if text == 'روابط الكروبات' or text == 'روابط المجموعات' then
